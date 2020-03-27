@@ -1,3 +1,5 @@
+package view;
+
 import view.HomePanel;
 
 import javax.swing.*;

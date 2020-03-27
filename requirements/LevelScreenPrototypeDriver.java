@@ -1,3 +1,4 @@
+import view.*;
 
 public class LevelScreenPrototypeDriver {
     public static void main(String []args) {
