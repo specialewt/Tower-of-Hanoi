@@ -18,4 +18,15 @@ public class Ring
     {
         this.size = r.getSize();
     }
+
+    // for terminal version
+    @Override
+    public String toString() {
+        char s[] = new char[size];
+        for (int i = 0; i < size; i++) {
+            s[i] = 'X';
+        }
+
+        return "[" + String.valueOf(s) + "]";
+    }
 }

@@ -1,4 +1,5 @@
 package model;
+import java.util.EmptyStackException;
 import java.util.Stack;
 
 public class Post
@@ -12,27 +13,51 @@ public class Post
     
     public boolean add(Ring newRing)
     {
-        Ring topRing = new Ring(this.post.peek());
-        
-        if (topRing.getSize()>newRing.getSize())
-        {
+        try {
+//            Ring topRing = new Ring(this.post.peek());
+//
+//            if (topRing == null || topRing.getSize() > newRing.getSize()) {
+//                this.post.push(newRing);
+//                return true;
+//
+//            } else {
+//                return false;
+//            }
+
+            // idk abt this
+            if (this.viewTop() == null || this.viewTop().getSize() > newRing.getSize()) {
+                this.post.push(newRing);
+                return true;
+            }
+            else {
+                return false;
+            }
+
+        } catch (EmptyStackException e) {
             this.post.push(newRing);
             return true;
-            
-        }else{
-            return false;
         }
+
     }
     
-    //Returns null if post is empty.
+    //Returns null if post is empty - added a try/catch block
     public Ring remove()
     {
-       return this.post.pop();
+        try {
+            return this.post.pop();
+        } catch (EmptyStackException e) {
+            return null;
+        }
     }
-    
+
+    //Returns null if post is empty with try/catch block
     public Ring viewTop()
     {
-        return this.post.peek();
+        try {
+            return this.post.peek();
+        } catch (EmptyStackException e) {
+            return null;
+        }
     }
     
     public boolean isEmpty()
@@ -44,10 +69,20 @@ public class Post
     {
         return (this.post.size()==maxRings);
     }
-    
+
+    // for terminal version
+    public Stack<Ring> getRings() {
+        return this.post;
+    }
+
+    // edited for terminal version
     public String toString()
     {
-        return (this.post.toString());
+        if (this.isEmpty()) {
+            return "| |";
+        } else {
+            return (this.post.toString());
+        }
     }
     
 }
