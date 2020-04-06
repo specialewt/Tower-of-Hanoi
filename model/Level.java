@@ -7,7 +7,7 @@ public class Level
     private ArrayList<Post> localPosts;
     private int levelNumber;
     private int moveCounter;
-    private ArrayList<Post> startingPosts;
+//    private ArrayList<Post> startingPosts;
     private int maxRings;   // need to pass to controller for isComplete()
     private boolean end;
     
