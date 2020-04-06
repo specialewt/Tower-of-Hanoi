@@ -7,7 +7,7 @@ public class Level
     private ArrayList<Post> localPosts;
     private int levelNumber;
     private int moveCounter;
-    private ArrayList<Post> startingPosts;
+//    private ArrayList<Post> startingPosts;
     private int maxRings;   // need to pass to controller for isComplete()
     private boolean end;
     
@@ -53,7 +53,6 @@ public class Level
 
     public void reset()
     {
-        System.out.println("restart");
         this.moveCounter = 0;
         this.setEnd(false);
         this.initialize();
