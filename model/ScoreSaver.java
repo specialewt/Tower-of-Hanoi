@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.ArrayList;
 import java.nio.charset.StandardCharsets;
 
-public class BestScoreSaver
+public class ScoreSaver
 {
     private Path scoreFilePath;
     private ArrayList<String> localScoreStringList;
     
     
-    public BestScoreSaver(String passedFileName)
+    public ScoreSaver(String passedFileName)
     {
         try
         {
@@ -91,7 +91,7 @@ public class BestScoreSaver
        
     }
     
-    public String<ArrayList> getScores()
+    public ArrayList<String> getScores()
     {
         this.readScores();
         return this.localScoreStringList;
