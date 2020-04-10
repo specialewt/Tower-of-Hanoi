@@ -41,7 +41,6 @@ public class BestScoreSaver
 
     protected void readScores()
     {
-//         ArrayList<String> rawScores = ArrayList<String>();
         try
         {
             this.localScoreStringList.clear();
