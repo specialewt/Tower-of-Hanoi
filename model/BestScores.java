@@ -34,24 +34,24 @@ public class BestScores
         }
         else
         {
-			for (int i = 0; i < numLevels; i++)
-			{
-				String[] levelInfo = namesAndScores.get(i).split(",");
-				names.add(levelInfo[1]);
-				scores.add(Integer.parseInt(levelInfo[2])); 
-			}
+	    for (int i = 0; i < numLevels; i++)
+	    {
+		String[] levelInfo = namesAndScores.get(i).split(",");
+		names.add(levelInfo[1]);
+		scores.add(Integer.parseInt(levelInfo[2])); 
+	    }
         }
     }
 
     private void updateScores()
     {
         ArrayList<String> namesAndScores = new ArrayList<String>();
-		for (int i = 0; i < this.numLevels; i++)
-		{
-		    String levelInfo = "LEVEL_" + Integer.toString(i + 1) + "," + this.names.get(i) + "," + Integer.toString(this.scores.get(i));
-		    namesAndScores.add(levelInfo);
-		} 
-		this.scoreSaver.saveScores(namesAndScores);
+	for (int i = 0; i < this.numLevels; i++)
+	{
+	    String levelInfo = "LEVEL_" + Integer.toString(i + 1) + "," + this.names.get(i) + "," + Integer.toString(this.scores.get(i));
+	    namesAndScores.add(levelInfo);
+	} 
+	this.scoreSaver.saveScores(namesAndScores);
     } 
 
     public boolean checkHighScore()
@@ -65,14 +65,14 @@ public class BestScores
 //            String name = s.nextLine();
 //            s.close();
             this.names.set(level - 1, this.name);
-		    this.scores.set(level - 1, this.score);
-		    this.updateScores();
-		    return true;
+	    this.scores.set(level - 1, this.score);
+	    this.updateScores();
+	    return true;
         }
-		else
-		{
-			this.updateScores();
-		    return false;
-		}
+	else
+	{
+ 	    this.updateScores();
+	    return false;
+	}
     }
 }
