@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.lang.Math;
 
 public class Level
 {
@@ -107,7 +108,6 @@ public class Level
 
     public int getMinMoves()
     {
-        return 2^this.maxRings - 1;
+        return ((int)(Math.pow(2, this.maxRings)) - 1);
     }
-
 }
