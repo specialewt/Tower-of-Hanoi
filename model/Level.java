@@ -105,4 +105,9 @@ public class Level
         this.end = end;
     }
 
+    public int getMinMoves()
+    {
+        return 2^this.maxRings - 1;
+    }
+
 }
