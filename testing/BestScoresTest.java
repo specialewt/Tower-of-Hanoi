@@ -1,8 +1,8 @@
-package testing;
+package model;
 
-import model.*;
 import java.io.File;
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 public class BestScoresTest {
