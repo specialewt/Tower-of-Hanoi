@@ -54,11 +54,11 @@ public class BestScores
 	this.scoreSaver.saveScores(namesAndScores);
     } 
 
-    public boolean checkHighScore()
+    public boolean checkBestScore()
     {
-        int highscore = scores.get(level - 1);
+        int bestscore = scores.get(level - 1);
 
-        if (this.score < highscore || highscore == 0)
+        if (this.score < bestscore || bestscore == 0)
         {
 //            Scanner s = new Scanner(System.in);
 //            System.out.println("Enter name: ");
