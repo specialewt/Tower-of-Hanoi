@@ -2,7 +2,7 @@ package model;
 
 import java.io.IOException;
 import java.nio.file.*;
-import java.util.Scanner;
+// import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
 import java.nio.charset.StandardCharsets;
@@ -24,19 +24,19 @@ public class ScoreSaver
         try
         {
             Path tempPath = Paths.get(passedFileName);
+            this.localScoreStringList = new ArrayList<String>();
             
             if (Files.exists(tempPath)){
                 this.scoreFilePath = tempPath;
-                System.out.println("File Exists.");
-                this.localScoreStringList = new ArrayList<String>();
+//                 System.out.println("File Exists.");
+                
                 this.readScores();
                 
             }else{
             
                 Path tempFilePath = Files.createFile(tempPath);
                 this.scoreFilePath = tempFilePath;
-                System.out.println("File Created.");
-                this.localScoreStringList = new ArrayList<String>();
+//                 System.out.println("File Created.");
             }
             
         }catch(IOException e){
@@ -50,19 +50,22 @@ public class ScoreSaver
     *@throws IOException : fileNotFound 
     */
 
-    protected void readScores()
+    public boolean readScores()
     {
         try
         {
-            this.localScoreStringList.clear();
+//             this.localScoreStringList.clear();
+            System.out.println("Target read path: "+this.scoreFilePath);
             List<String> tempList = Files.readAllLines(this.scoreFilePath,StandardCharsets.ISO_8859_1);
+            System.out.println("Read lines: "+tempList.toString());
             for (String line : tempList)
             {
                 this.localScoreStringList.add(line);
             }
-        
+            return true;
         }catch(IOException e){
             e.printStackTrace();
+            return false;
         }
         
     
@@ -89,20 +92,19 @@ public class ScoreSaver
     *@throws IOException : fileNotFound 
     */
     
-    protected void writeScores()
+    public boolean writeScores()
     {
         
         try
         {
             String saveString = this.formatSaveString();
             Files.write(this.scoreFilePath,saveString.getBytes());
-            
+            return true;
         }catch(IOException e){
-        
             e.printStackTrace();
+            return false;
         }
     }
-    
     /**
     * This is the public function used to "save" the scores/names
     *@param passedScores : An arraylist of the individual level scores & names
