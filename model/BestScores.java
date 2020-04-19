@@ -26,19 +26,19 @@ public class BestScores
 
         if (namesAndScores.size() == 0)
         {
-            for (int i = 0; i < numLevels; i++)
+            for (int i = 0; i < this.numLevels; i++)
             {
-                names.add("");
-                scores.add(0);
+                this.names.add("");
+                this.scores.add(0);
             }
         }
         else
         {
-	    for (int i = 0; i < numLevels; i++)
+	    for (int i = 0; i < this.numLevels; i++)
 	    {
 		String[] levelInfo = namesAndScores.get(i).split(",");
-		names.add(levelInfo[1]);
-		scores.add(Integer.parseInt(levelInfo[2])); 
+		this.names.add(levelInfo[1]);
+		this.scores.add(Integer.parseInt(levelInfo[2])); 
 	    }
         }
     }
