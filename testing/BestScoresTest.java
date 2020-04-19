@@ -8,7 +8,7 @@ import org.junit.Test;
 public class BestScoresTest {
 
     @Test
-    public void testUpdateScoresExpectTrue()
+    public void testCheckBestScoreExpectTrue()
     {
     	File file = new File("./test.txt");
     	file.delete();
@@ -18,7 +18,7 @@ public class BestScoresTest {
     }
     
     @Test
-    public void testUpdateScoresExpectTrue2()
+    public void testCheckBestScoreExpectTrue2()
     {
     	File file = new File("./test.txt");
     	file.delete();
@@ -30,7 +30,7 @@ public class BestScoresTest {
     } 
     
     @Test
-    public void testUpdateScoresExpectFalse()
+    public void testCheckBestScoreExpectFalse()
     {
     	File file = new File("./test.txt");
     	file.delete();
@@ -42,7 +42,7 @@ public class BestScoresTest {
     }
     
     @Test
-    public void testUpdateScoresExpectFalse2()
+    public void testCheckBestScoreExpectFalse2()
     {
     	File file = new File("./test.txt");
     	file.delete();
