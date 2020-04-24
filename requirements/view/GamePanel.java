@@ -1,57 +1,74 @@
 package view;
 
+import model.*;
 import java.awt.*;
 import javax.swing.*;
 
 public class GamePanel extends JPanel
 {
 	private int width;
-        private int height;
+	private int height;
+		
+	private PostPanel leftPost;
+	private PostPanel middlePost;
+	private PostPanel rightPost;
 	
 	public GamePanel(int width)
 	{
-		this.setBackground(Color.WHITE);
 		this.width = width;
-                this.height = width / 2;
-		this.setLayout(new BorderLayout());
-                this.setPreferredSize(new Dimension(this.width, this.height));
+		this.height = (int)(width / 2);
+				
+		this.setBackground(Color.WHITE);
+		this.setPreferredSize(new Dimension(this.width, this.height));
+		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		
+		// add posts to game panel
+		int postWidth = (int)(this.width / 3);
+		this.leftPost = new PostPanel(postWidth, this.height);
+		this.middlePost = new PostPanel(postWidth, this.height);
+		this.rightPost = new PostPanel(postWidth, this.height);
+		this.add(this.leftPost);
+		this.add(this.middlePost);
+		this.add(this.rightPost);
+		
+//		this.leftPost.addRing(new Ring(6));
+//		this.leftPost.addRing(new Ring(5));
+//		this.leftPost.addRing(new Ring(4));
+		
+//		this.leftPost.addRing(new Ring(3));
+//		this.leftPost.addRing(new Ring(2));
+//		this.leftPost.addRing(new Ring(1));
+		
+//		this.middlePost.addRing(new Ring(4));
+		
+//		this.middlePost.addRing(new Ring(2));
+//		this.middlePost.addRing(new Ring(1));
+//		
+//		this.rightPost.addRing(new Ring(6));
+//		this.rightPost.addRing(new Ring(5));
+		
+//		this.rightPost.addRing(new Ring(4));		
 	}
 	
-	public void paintComponent(Graphics g)
+	public PostPanel getLeftPost()
 	{
-		 super.paintComponent(g);
-		 
-		 g.setColor(Color.BLACK);
-		 int rodHeight = (int)(3 * height / 5);
-		 int rodWidth = (int)(width / 50);
-		 int rody = (int)(height / 5);
-		 
-		 int rod1x = (int)(width / 5);
-		 int rod2x = (int)(width / 2);
-		 int rod3x = (int)(4 * width / 5);
-		 
-		 g.fillRect(rod1x - rodWidth / 2, rody, rodWidth, rodHeight);
-		 g.fillRect(rod2x - rodWidth / 2, rody, rodWidth, rodHeight);
-		 g.fillRect(rod3x - rodWidth / 2, rody, rodWidth, rodHeight);
-		 
-		 int diskHeight = (int)(height / 20);
-		 int disky = (int)(rodHeight + rody);
-		 
-		 int diskWidth1 = (int)(width / 10);
-		 int diskWidth2 = (int)(3 * width / 20);
-		 int diskWidth3 = (int)(width / 5);
-		 int diskWidth4 = (int)(width /4);
-		 		 
-		 g.setColor(Color.RED);
-		 g.fillRect(rod1x - diskWidth1 / 2, disky - diskHeight, diskWidth1, diskHeight);
-		 
-		 g.setColor(Color.YELLOW);
-		 g.fillRect(rod3x - diskWidth2 / 2, disky - 2 * diskHeight, diskWidth2, diskHeight);
-		 
-		 g.setColor(Color.GREEN);
-		 g.fillRect(rod3x - diskWidth3 / 2, disky - diskHeight, diskWidth3, diskHeight);
-
-		 g.setColor(Color.BLUE);
-		 g.fillRect(rod2x - diskWidth4 / 2, disky - diskHeight, diskWidth4, diskHeight);
+		return this.leftPost;
+	}
+	
+	public PostPanel getMiddlePost()
+	{
+		return this.middlePost;
+	}
+	
+	public PostPanel getRightPost()
+	{
+		return this.rightPost;
+	}
+	
+	public void removeRingsAllPosts()
+	{
+		this.leftPost.removeAllRings();
+		this.middlePost.removeAllRings();
+		this.rightPost.removeAllRings();
 	}
 }
