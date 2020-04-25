@@ -11,7 +11,8 @@ public class BestScores
     private String name;
     private ScoreSaver scoreSaver;
     private ArrayList<String> names = new ArrayList<String>();
-    private ArrayList<Integer> scores = new ArrayList<Integer>(); 
+    private ArrayList<Integer> scores = new ArrayList<Integer>();
+    private ArrayList<String> namesAndScores = new ArrayList<String>();
 
     public BestScores(int level, int numLevels, int score, String userName, String filename)
     {
@@ -45,13 +46,12 @@ public class BestScores
 
     private void updateScores()
     {
-        ArrayList<String> namesAndScores = new ArrayList<String>();
 	for (int i = 0; i < this.numLevels; i++)
 	{
 	    String levelInfo = "LEVEL_" + Integer.toString(i + 1) + "," + this.names.get(i) + "," + Integer.toString(this.scores.get(i));
-	    namesAndScores.add(levelInfo);
+	    this.namesAndScores.add(levelInfo);
 	} 
-	this.scoreSaver.saveScores(namesAndScores);
+	this.scoreSaver.saveScores(this.namesAndScores);
     } 
 
     public boolean checkBestScore()
@@ -74,5 +74,10 @@ public class BestScores
  	    this.updateScores();
 	    return false;
 	}
+    }
+    
+    public ArrayList<String> getNamesAndScores()
+    {
+    	return this.namesAndScores;
     }
 }
