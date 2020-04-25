@@ -5,21 +5,15 @@ import java.util.Scanner;
 
 public class BestScores
 {
-    private int level;
     private int numLevels;
-    private int score;
-    private String name;
     private ScoreSaver scoreSaver;
     private ArrayList<String> names = new ArrayList<String>();
     private ArrayList<Integer> scores = new ArrayList<Integer>();
     private ArrayList<String> namesAndScores = new ArrayList<String>();
 
-    public BestScores(int level, int numLevels, int score, String userName, String filename)
+    public BestScores(int numLevels, String filename)
     {
-        this.level = level;
         this.numLevels = numLevels;
-        this.score = score;
-        this.name = userName;
 
         this.scoreSaver = new ScoreSaver(filename);
 
@@ -42,6 +36,11 @@ public class BestScores
 		this.scores.add(Integer.parseInt(levelInfo[2])); 
 	    }
         }
+        
+        for (int i = 0; i < this.numLevels; i++)
+        {
+        	this.namesAndScores.add("");
+        }
     }
 
     private void updateScores()
@@ -49,29 +48,29 @@ public class BestScores
 	for (int i = 0; i < this.numLevels; i++)
 	{
 	    String levelInfo = "LEVEL_" + Integer.toString(i + 1) + "," + this.names.get(i) + "," + Integer.toString(this.scores.get(i));
-	    this.namesAndScores.add(levelInfo);
+	    this.namesAndScores.set(i, levelInfo);
 	} 
 	this.scoreSaver.saveScores(this.namesAndScores);
     } 
 
-    public boolean checkBestScore()
+    public boolean checkBestScore(int level, int score, String name)
     {
         int bestscore = scores.get(level - 1);
 
-        if (this.score < bestscore || bestscore == 0)
+        if (score < bestscore || bestscore == 0)
         {
 //            Scanner s = new Scanner(System.in);
 //            System.out.println("Enter name: ");
 //            String name = s.nextLine();
 //            s.close();
-            this.names.set(level - 1, this.name);
-	    this.scores.set(level - 1, this.score);
+            this.names.set(level - 1, name);
+	    this.scores.set(level - 1, score);
 	    this.updateScores();
 	    return true;
-        }
+	}
 	else
 	{
- 	    this.updateScores();
+	    this.updateScores();
 	    return false;
 	}
     }
