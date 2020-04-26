@@ -41,7 +41,7 @@ public class MainController
     
     private void levelButtonSetup()
     {
-        for (int i=1;i<6;i++)
+        for (int i=1;i<5;i++)
         {
             final int tempInt = i;
             ActionListener tempListener = new ActionListener(){

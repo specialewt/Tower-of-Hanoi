@@ -35,7 +35,7 @@ public class LevelSelectPanel extends JPanel
         
         this.levelBox.add(Box.createGlue());
         
-        for (int i =0; i<6;i++)
+        for (int i =0; i<5;i++)
         {
             int levelNum = i+1;
             JButton newLevelButton = new JButton("LEVEL_"+levelNum+"    "+"[Highscore Score]");
