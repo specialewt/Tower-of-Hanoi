@@ -11,7 +11,6 @@ public class ControlPanel extends JPanel {
 
     private JButton menu;
     private JButton reset;
-//    private JButton change;
 
     public ControlPanel(int frameWidth, int frameHeight) {
         this.setPreferredSize(new Dimension(frameWidth, frameHeight/6));
@@ -29,14 +28,10 @@ public class ControlPanel extends JPanel {
         this.menu.setFont(font);
         this.reset = new JButton("Reset");
         this.reset.setFont(font);
-//        this.change = new JButton("Change Level");
-//        this.change.setFont(font);
 
         this.add(this.menu);
         this.add(this.reset);
-//        this.add(this.change);
         this.add(this.movePanel);
-
     }
 
     public JButton getMenu() {
@@ -46,10 +41,6 @@ public class ControlPanel extends JPanel {
     public JButton getReset() {
         return this.reset;
     }
-
-//    public JButton getChange() {
-//        return this.change;
-//    }
 
     public JLabel getMoves() {
         return this.moves;

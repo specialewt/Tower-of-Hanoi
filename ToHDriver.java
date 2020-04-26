@@ -9,8 +9,8 @@ public class ToHDriver
     {
         GameFrame localGF = new GameFrame();
         HomePanel homeScreen = new HomePanel(localGF.getFrameWidth(),localGF.getFrameHeight());
-        BestScores newBestScores = new BestScores(5,"tesing/.exampleSaveFile.txt");
-        MainController gameController = new MainController(homeScreen,localGF);
+        BestScores newBestScores = new BestScores(5,"testing/.exampleSaveFile.txt");
+        MainController gameController = new MainController(homeScreen,localGF, newBestScores);
 
         gameController.startGame();
     }

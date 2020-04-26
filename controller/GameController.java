@@ -18,10 +18,11 @@ public class GameController{
 
     protected ActionListener menuListener;
     protected ActionListener resetListener;
-    protected ActionListener changeListener;
-    protected boolean restarted = false;
+
+    protected volatile boolean click = false;
     protected boolean playAgain = false;
     protected boolean next = false;
+    protected boolean exit = false;
 
     protected ActionListener leftSend;
     protected ActionListener midSend;
@@ -38,30 +39,24 @@ public class GameController{
         this.levelNum = level.getLevel();
         this.game = game;
 
+        // setting up control panel action listeners
         menuListener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("menu clicked");
-                exitToMenu();
-
+//                System.out.println("menu clicked");
+                click = true;
+                exit = true;
             }
         };
 
         resetListener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("reset clicked");
-                restarted = true;
+                System.out.println("Game was reset.");
+                click = true;
                 restartLevel();
-                play();
             }
         };
 
-//        changeListener = new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                System.out.println("change level clicked");
-//                // change level dialogue
-//            }
-//        };
-
+        // setting up post action listeners
         leftSend = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 //                System.out.println("left post send");
@@ -110,53 +105,54 @@ public class GameController{
             }
         };
 
+       // adding action listeners to control panel
         this.game.setOnMenu(menuListener);
         this.game.setOnReset(resetListener);
-//        this.game.setOnLevel(changeListener);
     }
 
+    // exits level screen and shows home panel
     private void exitToMenu() {
-        System.out.println("trying to exit");
         this.mainFrame.swapMainPanel(this.homeScreen.getHomePanel());
-
-//        while(!this.main.getLevelChosen());
-
-//        this.main.startGame();
-        System.out.println("swapped");
+        this.main.setInMenu(true);
     }
 
     // user plays
     public void play() {
-        System.out.println("playing");
+        System.out.println("[playing]");
+
+        // user plays until level is complete
         while (!level.isEnd()) {
-            System.out.println("Moves: " + level.getMoveCounter());
-            if (restarted == true) {
-                System.out.println("restarting");
-                restarted = false;
+            // ends game play if control panel button is clicked
+            if (click == true) {
+                click = false;
+                if (exit == true) {
+                    System.out.println("exiting...");
+                    exitToMenu();
+                }
                 return;
             }
-            this.moveRing();
+            // player can move rings
+            else {
+                this.moveRing();
+            }
         }
         System.out.println("LEVEL COMPLETE");
 
+        // disables control panel buttons when level is complete
         this.game.disableMenu();
         this.game.disableReset();
-        this.game.levelComplete();
+
+        // shows dialog box indicating level is complete
+        this.game.levelComplete(this.levelNum, this.level.getMoveCounter());
         endGame();
     }
 
-    // choices in dialog box when game is completed
+    // sets up choices in dialog box when game is completed
     private void endGame() {
-        ActionListener replayListener = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("replaying");
-                restarted = false;
-                playAgain = true;
-                restartLevel();
-                System.out.println("restarted");
-            }
-        };
+        System.out.println(this.game.getBestScore());
+        this.main.endOfLevelUpdates(this.game.getBestScore());
 
+        System.out.println("Scores were updated");
         ActionListener nextListener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 next = true;
@@ -164,28 +160,22 @@ public class GameController{
         };
 
         this.game.setOnMenuComplete(menuListener);
-        this.game.setOnPlayAgain(replayListener);
+        this.game.setOnPlayAgain(resetListener);
         this.game.setOnNextLevel(nextListener);
-        // if high score
-        // else
 
         while (this.game.endChoice() == false);
 
         if (playAgain == true) {
             playAgain = false;
-            play();
-        }
-
-        if (next == true) {
+        } else if (exit == true) {
+            exitToMenu();
+        } else if (next == true) {
             this.levelNum += 1;
             this.level = new Level(this.levelNum);
             next = false;
-
             restartLevel();
-            play();
         }
     }
-
 
     // user input to move rings
     private void moveRing() {
@@ -194,7 +184,12 @@ public class GameController{
         this.game.setOnMid(midSend);
         this.game.setOnRight(rightSend);
 
-        while(moving == false);
+        // waiting for send post to be chosen
+        while(moving == false) {
+            if (click == true) {
+                break;
+            }
+        }
 
         this.game.removeOnLeft(leftSend);
         this.game.removeOnMid(midSend);
@@ -204,15 +199,27 @@ public class GameController{
         this.game.setOnMid(midReceive);
         this.game.setOnRight(rightReceive);
 
-        while(moving == true);
+        // waiting for receiving post to be chosen or control panel button is clicked
+        while(moving == true) {
+            if (click == true) {
+                // exiting mid move
+                moving = false;
+                break;
+            }
+        }
 
         this.game.removeOnLeft(leftReceive);
         this.game.removeOnMid(midReceive);
         this.game.removeOnRight(rightReceive);
 
-        if (this.level.move(sendPost, receivePost)) {
+        if (click == true) {
+            // exiting move
+            return;
+        } else if (this.level.move(sendPost, receivePost)) {
             this.game.updateMoves(this.level.getMoveCounter());
             this.game.moveRingIcon(sendPost, receivePost);
+        } else {
+            this.game.invalidMove();
         }
 
     }

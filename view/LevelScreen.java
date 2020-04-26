@@ -12,10 +12,9 @@ import java.awt.event.ActionListener;
 public class LevelScreen extends JPanel implements LevelScreenInterface {
     private JFrame mainFrame;
     private Level level;
-//    private int frameSize = 800;
-
     private int frameHeight;
     private int frameWidth;
+
     private JPanel levelPanel;
     private JPanel titlePanel;
     private GamePanel game;
@@ -30,16 +29,8 @@ public class LevelScreen extends JPanel implements LevelScreenInterface {
         this.frameWidth = mainFrame.getFrameWidth();
     }
 
+    // building whole level screen
     public void createLevel() {
-//        this.mainFrame = new JFrame("Tower of Hanoi: Level "+level.getLevel());
-//
-//        this.frameHeight = 4/3*frameSize;
-//        this.frameWidth = frameSize;
-//        this.mainFrame.setPreferredSize(new Dimension(this.frameWidth, this.frameHeight));
-//
-//        // default close operation
-//        this.mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         levelPanel = new JPanel();
         levelPanel.setBackground(Color.WHITE);
         levelPanel.setPreferredSize(new Dimension(this.frameWidth, this.frameHeight));
@@ -68,22 +59,36 @@ public class LevelScreen extends JPanel implements LevelScreenInterface {
         this.levelPanel.add(controls, BorderLayout.SOUTH);
         this.levelPanel.add(titlePanel, BorderLayout.NORTH);
         this.levelPanel.add(game, BorderLayout.CENTER);
+    }
 
-        // adding level panel to main frame
-//        this.mainFrame.add(levelPanel);
-//
-//        mainFrame.pack();
-//        mainFrame.setVisible(true);
+    // building game panel with posts and rings
+    public void buildGame(Level level) {
+        this.game.removeRingsAllPosts();
+
+        Post left = level.getPost(0);
+        for (Ring r : left.getRings()) {
+            game.getLeftPost().addRing(r);
+        }
+
+        Post mid = level.getPost(1);
+        for (Ring r : mid.getRings()) {
+            game.getMiddlePost().addRing(r);
+        }
+
+        Post right = level.getPost(2);
+        for (Ring r : right.getRings()) {
+            game.getRightPost().addRing(r);
+        }
+
+        this.game.revalidate();
+        this.game.repaint();
     }
 
     public JPanel getLevelPanel() {
         return this.levelPanel;
     }
-//
-//    public void removeLevelScreen() {
-//        this.mainFrame.remove(levelPanel);
-//    }
 
+    // control panel buttons
     public void setOnMenu(ActionListener l) {
         controls.getMenu().addActionListener(l);
     }
@@ -91,10 +96,6 @@ public class LevelScreen extends JPanel implements LevelScreenInterface {
     public void setOnReset(ActionListener l) {
         controls.getReset().addActionListener(l);
     }
-
-//    public void setOnLevel(ActionListener l) {
-//        controls.getChange().addActionListener(l);
-//    }
 
     public void disableMenu() {
         controls.getMenu().setEnabled(false);
@@ -112,6 +113,7 @@ public class LevelScreen extends JPanel implements LevelScreenInterface {
         controls.getReset().setEnabled(true);
     }
 
+    // post buttons
     public void setOnLeft(ActionListener l) {
         game.getLeftPost().setPostButton(l);
     }
@@ -136,32 +138,7 @@ public class LevelScreen extends JPanel implements LevelScreenInterface {
         game.getRightPost().removeListener(l);
     }
 
-    public void buildGame(Level level) {
-        this.game.removeRingsAllPosts();
-
-        Post left = level.getPost(0);
-        for (Ring r : left.getRings()) {
-            game.getLeftPost().addRing(r);
-        }
-
-        Post mid = level.getPost(1);
-        for (Ring r : mid.getRings()) {
-            game.getMiddlePost().addRing(r);
-        }
-
-        Post right = level.getPost(2);
-        for (Ring r : right.getRings()) {
-            game.getRightPost().addRing(r);
-        }
-
-        this.game.revalidate();
-        this.game.repaint();
-    }
-
-    public void updateMoves(int newMoveCount) {
-        this.controls.getMoves().setText("Moves: " + newMoveCount);
-    }
-
+    // moving ring icon between posts
     public void moveRingIcon(int sendPost, int receivePost) {
         RingIcon movingIcon = null;
 
@@ -182,9 +159,20 @@ public class LevelScreen extends JPanel implements LevelScreenInterface {
         }
     }
 
-    public void levelComplete() {
-        //need to pass boolean for best score
-        complete = new DialogPanel(this.mainFrame, this.level, true);
+    // invalid move error
+    public void invalidMove() {
+        JOptionPane.showMessageDialog(this.mainFrame, "INVALID MOVE. TRY AGAIN.",
+                "Invalid Move Error", JOptionPane.WARNING_MESSAGE);
+    }
+
+    // updating move counter display
+    public void updateMoves(int newMoveCount) {
+        this.controls.getMoves().setText("Moves: " + newMoveCount);
+    }
+
+    // shows dialog box when level is complete
+    public void levelComplete(int levelNum, int moves) {
+        complete = new DialogPanel(this.mainFrame, levelNum, moves);
 
         this.endChoice = false;
         ActionListener dialogListener = new ActionListener() {
@@ -201,14 +189,15 @@ public class LevelScreen extends JPanel implements LevelScreenInterface {
         complete.showDialog();
     }
 
-    public boolean endChoice() {
-        return this.endChoice;
-    }
-
+    // returns string for the level, user name, and score from round
     public String getBestScore() {
-        return level.getLevel() + "," + this.complete.getName() + "," + level.getMoveCounter();
+        // wait for user to enter name & hit ok
+        while (this.complete.getEnteredName() == false);
+
+        return level.getLevel() + "," + level.getMoveCounter() + "," + this.complete.getName();
     }
 
+    // dialog box buttons
     public void setOnMenuComplete(ActionListener l) {
         complete.getMenuInDialog().addActionListener(l);
     }
@@ -221,8 +210,9 @@ public class LevelScreen extends JPanel implements LevelScreenInterface {
         complete.getNextLevel().addActionListener(l);
     }
 
-//    public JFrame getFrame()
-//    {
-//        return this.mainFrame;
-//    }
+    // returns boolean after choice from dialog box is made
+    public boolean endChoice() {
+        return this.endChoice;
+    }
+
 }
