@@ -15,17 +15,17 @@ public class MainController
     
     protected GameFrameInterface gameFrame;
     protected HomePanelInterface homeScreen;
-//     protected LevelPanelInterFace currentLevel;
-//     protected BestScores localBestScores;
+    protected BestScores localBestScores;
     protected LevelScreenInterface levelScreen;
     protected GameController game;
     protected volatile boolean levelChosen = false;
 
-    public MainController(HomePanelInterface homeScreen,GameFrameInterface gameFrame)
+    public MainController(HomePanelInterface homeScreen,GameFrameInterface gameFrame, BestScores localBestScores)
     {
         
         this.homeScreen = homeScreen;
         this.gameFrame = gameFrame;
+        this.localBestScores = localBestScores;
         
         this.levelButtonSetup();
 
@@ -74,7 +74,23 @@ public class MainController
 
         System.out.println("swapped");
     }
-
+    
+    public void endOfLevelUpdates(String currentLevelScore)
+    {
+        String[] levelInfo = currentLevelScore.split();
+        
+        int tempLevelNum = Integer.parseInt(levelInfo[0].substring(levelInfo[0].length()-1));
+        int tempScore = Integer.parseInt(levelInfo[1]);
+    
+        //Update BestScores
+        this.localBestScores.checkBestScore(tempLevelNum,tempScore,levelInfo[2]);
+    
+        //Update the homeScreen
+        this.homeScreen.updateHighScores(this.localBestScores.getNamesAndScores());
+    }
+    
+    
+    
     public void startGame()
     {
         while (!levelChosen) ;
