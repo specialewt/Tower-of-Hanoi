@@ -10,6 +10,8 @@ public class ToHDriver
         GameFrame localGF = new GameFrame();
         HomePanel homeScreen = new HomePanel(localGF.getFrameWidth(),localGF.getFrameHeight());
         MainController gameController = new MainController(homeScreen,localGF);
+
+        gameController.startGame();
     }
 
 }
