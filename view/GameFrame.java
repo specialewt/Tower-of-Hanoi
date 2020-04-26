@@ -50,12 +50,13 @@ public class GameFrame implements GameFrameInterface
     //Interface Method
     public void swapMainPanel(JPanel newPanel)
     {
-        this.mainFrame.setVisible(false);
+//        this.mainFrame.setVisible(false);
         this.mainFrame.getContentPane().removeAll();
         
-        this.mainFrame.add(newPanel);
-        
-        this.mainFrame.validate();
+        this.mainFrame.getContentPane().add(newPanel);
+
+        this.mainFrame.revalidate();
+        this.mainFrame.repaint();
         this.mainFrame.pack();
         this.mainFrame.setVisible(true);
     }
