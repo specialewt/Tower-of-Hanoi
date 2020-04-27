@@ -48,7 +48,7 @@ public class MainController
     
     private void levelButtonSetup()
     {
-        for (int i=1;i<5;i++)
+        for (int i=1;i<6;i++)
         {
             final int tempInt = i;
             ActionListener tempListener = new ActionListener(){
@@ -80,16 +80,19 @@ public class MainController
         this.gameFrame.swapMainPanel(levelScreen.getLevelPanel());
     }
     
-    public void endOfLevelUpdates(String currentLevelScore)
+    public void endOfLevelUpdates(int levelNum, int score, String name)
     {
-        String[] levelInfo = currentLevelScore.split(",");
-        
-        int tempLevelNum = Integer.parseInt(levelInfo[0].substring(levelInfo[0].length()-1));
-        int tempScore = Integer.parseInt(levelInfo[1]);
-    
+//        String[] levelInfo = currentLevelScore.split(",");
+//
+//        int tempLevelNum = Integer.parseInt(levelInfo[0].substring(levelInfo[0].length()-1));
+//        int tempScore = Integer.parseInt(levelInfo[1]);
+//
+//        //Update BestScores
+//        this.localBestScores.checkBestScore(tempLevelNum,tempScore,levelInfo[2]);
+
         //Update BestScores
-        this.localBestScores.checkBestScore(tempLevelNum,tempScore,levelInfo[2]);
-    
+        this.localBestScores.checkBestScore(levelNum, score, name);
+
         //Update the homeScreen
         this.homeScreen.updateHighScores(this.localBestScores.getNamesAndScores());
     }

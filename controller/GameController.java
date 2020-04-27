@@ -144,15 +144,18 @@ public class GameController{
 
         // shows dialog box indicating level is complete
         this.game.levelComplete(this.levelNum, this.level.getMoveCounter());
+        System.out.println("Level "+this.levelNum);
+        System.out.println("Moves: "+this.level.getMoveCounter());
         endGame();
     }
 
     // sets up choices in dialog box when game is completed
     private void endGame() {
-        System.out.println(this.game.getBestScore());
-        this.main.endOfLevelUpdates(this.game.getBestScore());
+        System.out.println(this.game.getBestScoreName());
 
-        System.out.println("Scores were updated");
+        this.main.endOfLevelUpdates(this.levelNum, this.level.getMoveCounter(), this.game.getBestScoreName());
+
+        System.out.println("Scores were updated.");
         ActionListener nextListener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 next = true;
@@ -172,6 +175,8 @@ public class GameController{
         } else if (next == true) {
             this.levelNum += 1;
             this.level = new Level(this.levelNum);
+            this.game.updateTitle(this.levelNum);
+
             next = false;
             restartLevel();
         }

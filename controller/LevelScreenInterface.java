@@ -35,9 +35,10 @@ public interface LevelScreenInterface {
 
     // level completion
     public void levelComplete(int levelNum, int moves);
-    public String getBestScore();
+    public String getBestScoreName();
     public void setOnMenuComplete(ActionListener menuListener);
     public void setOnNextLevel(ActionListener nextListener);
     public void setOnPlayAgain(ActionListener resetListener);
+    public void updateTitle(int levelNum);
     public boolean endChoice();
 }

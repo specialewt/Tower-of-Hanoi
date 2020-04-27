@@ -38,7 +38,7 @@ public class LevelSelectPanel extends JPanel
         for (int i =0; i<5;i++)
         {
             int levelNum = i+1;
-            JButton newLevelButton = new JButton("LEVEL_"+levelNum+"    "+"[Highscore Score]");
+            JButton newLevelButton = new JButton("Level "+levelNum+"    "+"[Best Score]");
             //newLevelButton.setPreferredSize(new Dimension(parentWidth,parentHeight));
             newLevelButton.setFont(this.buttonFont);
             newLevelButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -57,7 +57,8 @@ public class LevelSelectPanel extends JPanel
     public void updateLevelButtonText(int level, String newText)
     {
         String[] tempLevelInfo = newText.split(",");
-        String baseText = tempLevelInfo[0]+"    "+"[Highscore Score]";
+//        String baseText = tempLevelInfo[0]+"    "+"[Best Score]";
+        String baseText = "Level " + level + "    " + "[Best Score]";
         JButton tempButton = this.levelList.get(level-1);
         
         
