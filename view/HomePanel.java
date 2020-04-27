@@ -52,6 +52,7 @@ public class HomePanel extends JPanel implements HomePanelInterface
         int levelNum = 0;
         for (String score : newScores)
         {
+            System.out.println(score);
             levelNum++;
             this.localLevelPanel.updateLevelButtonText(levelNum,score);
         }    

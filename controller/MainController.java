@@ -32,12 +32,14 @@ public class MainController
         this.localBestScores = localBestScores;
         
         this.levelButtonSetup();
+        
+        System.out.println(this.localBestScores.getNamesAndScores());
+        
+        this.homeScreen.updateHighScores(this.localBestScores.getNamesAndScores());
 
         this.gameFrame.swapMainPanel(this.homeScreen.getHomePanel());
         this.inMenu = true;
 
-//        this.startGame();
-//        this.gameFrame.getFrame().add(this.homeScreen.getHomePanel());
     }
 
     public HomePanelInterface getHomeScreen() {

@@ -23,7 +23,7 @@ public class BestScores
         {
             for (int i = 0; i < this.numLevels; i++)
             {
-                this.names.add("");
+                this.names.add("null");
                 this.scores.add(0);
             }
         }
@@ -31,6 +31,8 @@ public class BestScores
         {
             for (int i = 0; i < this.numLevels; i++)
             {
+                System.out.println(namesAndScores.get(i));
+                
                 String[] levelInfo = namesAndScores.get(i).split(",");
                 this.names.add(levelInfo[1]);
                 this.scores.add(Integer.parseInt(levelInfo[2])); 
@@ -41,6 +43,7 @@ public class BestScores
         {
         	this.namesAndScores.add("");
         }
+        this.updateScores();
     }
 
     private void updateScores()
