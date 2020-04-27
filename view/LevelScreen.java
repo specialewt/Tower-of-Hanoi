@@ -17,6 +17,8 @@ public class LevelScreen extends JPanel implements LevelScreenInterface {
 
     private JPanel levelPanel;
     private JPanel titlePanel;
+    private JLabel titleLabel;
+
     private GamePanel game;
     private ControlPanel controls;
     private DialogPanel complete;
@@ -42,7 +44,7 @@ public class LevelScreen extends JPanel implements LevelScreenInterface {
         titlePanel.setPreferredSize(new Dimension(frameWidth,frameHeight / 4));
         titlePanel.setLayout(new GridBagLayout());
 
-        JLabel titleLabel = new JLabel("LEVEL "+level.getLevel());
+        titleLabel = new JLabel("LEVEL "+level.getLevel());
         titleLabel.setForeground((Color.BLACK));
         titleLabel.setFont(new Font(Font.SANS_SERIF, Font.ITALIC, 24));
 
@@ -189,12 +191,12 @@ public class LevelScreen extends JPanel implements LevelScreenInterface {
         complete.showDialog();
     }
 
-    // returns string for the level, user name, and score from round
-    public String getBestScore() {
+    // returns user entered name
+    public String getBestScoreName() {
         // wait for user to enter name & hit ok
         while (this.complete.getEnteredName() == false);
 
-        return level.getLevel() + "," + level.getMoveCounter() + "," + this.complete.getName();
+        return this.complete.getName();
     }
 
     // dialog box buttons
@@ -208,6 +210,10 @@ public class LevelScreen extends JPanel implements LevelScreenInterface {
 
     public void setOnNextLevel(ActionListener l) {
         complete.getNextLevel().addActionListener(l);
+    }
+
+    public void updateTitle(int levelNum) {
+        this.titleLabel.setText("LEVEL " + levelNum);
     }
 
     // returns boolean after choice from dialog box is made

@@ -23,7 +23,7 @@ public class BestScores
         {
             for (int i = 0; i < this.numLevels; i++)
             {
-                this.names.add("null");
+                this.names.add("");
                 this.scores.add(0);
             }
         }

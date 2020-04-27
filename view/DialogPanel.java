@@ -93,6 +93,7 @@ public class DialogPanel extends JPanel {
     }
 
     public void closeDialog() {
+        this.enteredName = false;
         dialog.dispose();
     }
 
